@@ -1,24 +1,28 @@
-package com.cwgoover.main;
+package com.cwgoover.main.util;
 
 /**
- * Find two numbers which only appear once in an array which other elements
- * appear twice.
- *
+ * Bitwise operation utility class
  */
-public class BitwiseFindOnce {
-    public static final void main(String[] args) {
-        int[] a = new int[] {13, 2333, 12, 421, 455, 23, 12, 455, 2333, 421};
-        System.out.printf("The digital is: " + getNumsAppearOnce(a));
+public class BitwiseUtil {
+
+    /**
+     * Transform digit's sign bit.
+     * Negative to positive, or positive to negative
+     */
+    public static int transformSignBit(int digit) {
+        return ~digit + 1;
     }
 
     /**
-     * The core method
+     * Find two numbers which only appear once in an array which other elements
+     * appear twice.
+     *
      * @param array an array contains two number appearing exactly once,
      *              while others appearing exactly twice.
      * @return num1 - the first number appearing once in array
      *         num2 - the second number appearing once in array
      */
-    private static String getNumsAppearOnce(int[] array) {
+    public static String getNumsAppearOnce(int[] array) {
         // XXX: remember check exception!!!!
         if (array == null || array.length < 2) {
             return "";
@@ -26,8 +30,8 @@ public class BitwiseFindOnce {
 
         // get num1 ^ num2
         int resExclusiveOR = 0;
-        for (int i = 0; i < array.length; i++) {
-            resExclusiveOR ^= array[i];
+        for (int anArray : array) {
+            resExclusiveOR ^= anArray;
         }
 
         // get index of the first bit, which is 1 in resExclusiveOR
@@ -46,17 +50,13 @@ public class BitwiseFindOnce {
         }
 
         // Prepare string to show the number
-        StringBuilder result = new StringBuilder();
-        result.append(num1);
-        result.append(", ");
-        result.append(num2);
-        return result.toString();
+        return String.valueOf(num1) + ", " + num2;
     }
 
     /**
      * Find the index of the first bit which is 1 in number
      * @param number  assuming not 0
-     * @return
+     *
      */
     private static int findFirstBitIs1(int number) {
         int indexBit = 0;
@@ -69,9 +69,6 @@ public class BitwiseFindOnce {
 
     /**
      * Is the indexBit bit of num 1?
-     * @param num
-     * @param index
-     * @return
      */
     private static boolean isBit1(int num, int index) {
         return ((num >> index) & 1) == 1;
